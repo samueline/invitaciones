@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Nuestra Boda · Hacienda Kalá · 3 de Abril 2027</title>
+  <meta name="description" content="Te invitamos a celebrar nuestra boda en Hacienda Kalá, El Rosal. Confirma tu asistencia, conoce el itinerario, el código de vestimenta y cómo llegar.">
+  <meta name="theme-color" content="#2b3423">
+
+  <!-- Vista previa al compartir por WhatsApp / redes -->
+  <meta property="og:title" content="¡Nos casamos! · Hacienda Kalá">
+  <meta property="og:description" content="Sábado 3 de abril de 2027 · Acompáñanos en este día tan especial.">
+  <meta property="og:image" content="assets/hacienda.jpg">
+  <meta property="og:type" content="website">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@300;400;500;600&family=Pinyon+Script&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="locked">
+
+  <!-- ====== SVG reutilizables ====== -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <path id="leaf" d="M0 0 C 7 -7, 22 -7, 30 0 C 22 7, 7 7, 0 0 Z"/>
+      <symbol id="olive-branch" viewBox="0 0 240 70">
+        <path d="M4 40 C 60 28, 130 46, 236 30" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+        <g fill="currentColor">
+          <use href="#leaf" transform="translate(30 36) rotate(-40)"/>
+          <use href="#leaf" transform="translate(42 37) rotate(30)"/>
+          <use href="#leaf" transform="translate(70 34) rotate(-35)"/>
+          <use href="#leaf" transform="translate(84 37) rotate(35)"/>
+          <use href="#leaf" transform="translate(112 37) rotate(-30)"/>
+          <use href="#leaf" transform="translate(126 39) rotate(40)"/>
+          <use href="#leaf" transform="translate(156 37) rotate(-38)"/>
+          <use href="#leaf" transform="translate(170 36) rotate(32)"/>
+          <use href="#leaf" transform="translate(198 32) rotate(-30)"/>
+          <use href="#leaf" transform="translate(206 33) rotate(28)"/>
+        </g>
+        <g fill="currentColor" opacity=".75">
+          <ellipse cx="96" cy="48" rx="4.5" ry="6"/>
+          <ellipse cx="140" cy="27" rx="4.5" ry="6"/>
+          <ellipse cx="184" cy="46" rx="4.5" ry="6"/>
+        </g>
+      </symbol>
+    </defs>
+  </svg>
+
+  <!-- ====== INTRO: sobre con sello de cera ====== -->
+  <div id="intro" class="intro" role="dialog" aria-label="Abrir invitación">
+    <div class="intro__door intro__door--left"></div>
+    <div class="intro__door intro__door--right"></div>
+    <div class="intro__content">
+      <p class="intro__eyebrow">Tienes una invitación especial</p>
+      <button id="open-invitation" class="seal" aria-label="Abrir invitación">
+        <span class="seal__ring"></span>
+        <span class="seal__initials" data-bind="iniciales">E &amp; E</span>
+      </button>
+      <p class="intro__hint">Toca el sello para abrir</p>
+    </div>
+  </div>
+
+  <!-- Botón de música -->
+  <button id="music-toggle" class="music-toggle" aria-label="Música" hidden>
+    <span class="bars"><i></i><i></i><i></i><i></i></span>
+  </button>
+
+  <!-- ====== HERO ====== -->
+  <header class="hero" id="inicio">
+    <div class="hero__bg" style="background-image:url('assets/hacienda.jpg')"></div>
+    <div class="hero__overlay"></div>
+    <canvas id="leaves-canvas" class="hero__canvas" aria-hidden="true"></canvas>
+
+    <div class="hero__content">
+      <p class="hero__eyebrow anim" style="--d:.2s">Nos casamos</p>
+      <h1 class="hero__names">
+        <span class="name anim-letters" data-bind="novia">Ella</span>
+        <span class="amp anim" style="--d:1.2s">&amp;</span>
+        <span class="name anim-letters" data-bind="novio" data-delay="1.4">Él</span>
+      </h1>
+      <svg class="hero__branch anim" style="--d:2.2s"><use href="#olive-branch"/></svg>
+      <p class="hero__date anim" style="--d:2.5s" data-bind="fechaTexto">Sábado · 03 · Abril · 2027</p>
+      <p class="hero__place anim" style="--d:2.8s"><span data-bind="lugarNombre">Hacienda Kalá</span> · El Rosal</p>
+    </div>
+
+    <a href="#cuenta" class="scroll-cue anim" style="--d:3.2s" aria-label="Desliza hacia abajo">
+      <span>Desliza</span><i></i>
+    </a>
+  </header>
+
+  <main>
+    <!-- ====== CUENTA REGRESIVA ====== -->
+    <section class="section section--cream" id="cuenta">
+      <div class="container">
+        <p class="eyebrow reveal">Falta muy poco</p>
+        <h2 class="title reveal">Cuenta regresiva</h2>
+        <div class="countdown reveal">
+          <div class="cd"><span class="cd__num" id="cd-d">000</span><span class="cd__lbl">Días</span></div>
+          <div class="cd"><span class="cd__num" id="cd-h">00</span><span class="cd__lbl">Horas</span></div>
+          <div class="cd"><span class="cd__num" id="cd-m">00</span><span class="cd__lbl">Minutos</span></div>
+          <div class="cd"><span class="cd__num" id="cd-s">00</span><span class="cd__lbl">Segundos</span></div>
+        </div>
+        <div class="btn-row reveal">
+          <a id="btn-gcal" class="btn btn--ghost" target="_blank" rel="noopener">＋ Google Calendar</a>
+          <button id="btn-ics" class="btn btn--ghost">＋ Apple / Outlook</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====== NUESTRA CANCIÓN ====== -->
+    <section class="section section--white music-section" id="musica">
+      <div class="container">
+        <p class="eyebrow reveal">Banda sonora de nuestra boda</p>
+        <h2 class="title reveal">Nuestra Canción</h2>
+        <p class="text reveal">Acompáñanos a revivir nuestra historia de amor con la melodía que marca este nuevo capítulo.</p>
+
+        <div class="music-card reveal" id="music-card">
+          <div class="music-card__body">
+            <div class="music-card__disc-wrapper">
+              <div class="music-card__disc" id="music-disc" aria-hidden="true">
+                <div class="music-card__disc-center">
+                  <svg class="music-card__disc-icon" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
+                  </svg>
+                </div>
+              </div>
+            </div>
+
+            <div class="music-card__info">
+              <span class="music-card__badge" id="music-status-text">Música de la boda</span>
+              <h3 class="music-card__song" data-bind="cancionTitulo">Risk It All</h3>
+              <p class="music-card__artist" data-bind="cancionArtista">Bruno Mars</p>
+              
+              <div class="music-card__wave" id="music-waves" aria-hidden="true">
+                <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="music-card__action">
+            <button id="btn-play-music" class="btn btn--solid music-card__btn" type="button" aria-label="Reproducir canción">
+              <span class="music-card__btn-icon" id="music-btn-icon">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+              </span>
+              <span id="music-btn-text">Escuchar nuestra canción</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====== FRASE ====== -->
+    <section class="section section--olive quote-section">
+      <svg class="quote-branch reveal"><use href="#olive-branch"/></svg>
+      <blockquote class="quote reveal">
+        “Las mejores historias comienzan con un sí, y queremos escribir este capítulo rodeados de las personas que más amamos.”
+      </blockquote>
+      <p class="quote-sign reveal"><span data-bind="novia">Ella</span> &amp; <span data-bind="novio">Él</span></p>
+    </section>
+
+    <!-- ====== LUGAR ====== -->
+    <section class="section section--cream" id="lugar">
+      <div class="container">
+        <p class="eyebrow reveal">Ceremonia &amp; Recepción</p>
+        <h2 class="title reveal">El lugar</h2>
+
+        <article class="venue reveal">
+          <div class="venue__img" style="background-image:url('assets/hacienda.jpg')"></div>
+          <div class="venue__body">
+            <h3 class="venue__name" data-bind="lugarNombre">Hacienda Kalá</h3>
+            <p class="venue__addr" data-bind="lugarDireccion">El Rosal, Cundinamarca</p>
+            <div class="venue__meta">
+              <div><span class="lbl">Ceremonia</span><strong>4:00 PM</strong></div>
+              <div><span class="lbl">Recepción</span><strong>5:30 PM</strong></div>
+            </div>
+            <p class="venue__note">Casona colonial, jardines y domo de cristal en plena Sabana. El clima en la noche es frío, ¡trae abrigo!</p>
+          </div>
+        </article>
+
+        <div class="map reveal">
+          <iframe id="map-frame" title="Mapa Hacienda Kalá" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+        <div class="btn-row reveal">
+          <a id="btn-maps" class="btn btn--solid" target="_blank" rel="noopener">Google Maps</a>
+          <a id="btn-waze" class="btn btn--outline" target="_blank" rel="noopener">Waze</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====== ITINERARIO ====== -->
+    <section class="section section--white" id="itinerario">
+      <div class="container">
+        <p class="eyebrow reveal">Programa del día</p>
+        <h2 class="title reveal">Itinerario</h2>
+
+        <div class="timeline" id="timeline">
+          <span class="timeline__line"><span class="timeline__progress" id="timeline-progress"></span></span>
+          <ol>
+            <li class="tl reveal"><span class="tl__dot">🌿</span><time>3:30 PM</time><h4>Llegada de invitados</h4><p>Bienvenida en los jardines</p></li>
+            <li class="tl reveal"><span class="tl__dot">💍</span><time>4:00 PM</time><h4>Ceremonia</h4><p>El momento del “Sí”</p></li>
+            <li class="tl reveal"><span class="tl__dot">🥂</span><time>5:30 PM</time><h4>Cóctel &amp; fotos</h4><p>Bebidas, pasabocas y atardecer</p></li>
+            <li class="tl reveal"><span class="tl__dot">🍽️</span><time>7:00 PM</time><h4>Cena &amp; brindis</h4><p>Compartir en la mesa</p></li>
+            <li class="tl reveal"><span class="tl__dot">💃</span><time>8:30 PM</time><h4>¡Fiesta!</h4><p>Música y baile hasta el final</p></li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====== DRESS CODE ====== -->
+    <section class="section section--cream" id="vestimenta">
+      <div class="container">
+        <p class="eyebrow reveal">Dress code</p>
+        <h2 class="title reveal">Formal</h2>
+        <div class="dress reveal">
+          <div class="dress__item">
+            <svg viewBox="0 0 64 64" class="dress__icon"><path d="M22 6l10 8 10-8 6 6-6 10v36H22V22l-6-10z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M32 14v44M28 24l4 4 4-4" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+            <span>Traje</span>
+          </div>
+          <div class="dress__item">
+            <svg viewBox="0 0 64 64" class="dress__icon"><path d="M26 6h12l-2 12 4 8-4 4 14 28H14l14-28-4-4 4-8z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+            <span>Vestido largo</span>
+          </div>
+        </div>
+        <p class="text reveal">Nos encantaría que te unas a nuestra paleta de tonos naturales:</p>
+        <div class="swatches reveal">
+          <span class="sw" style="--c:#2f3a26" data-name="Oliva profundo"></span>
+          <span class="sw" style="--c:#5b6b3a" data-name="Oliva"></span>
+          <span class="sw" style="--c:#9aa77f" data-name="Salvia"></span>
+          <span class="sw" style="--c:#cdbb9a" data-name="Arena"></span>
+          <span class="sw" style="--c:#8a6f4e" data-name="Terracota suave"></span>
+        </div>
+        <p class="small reveal">Reservamos el blanco y marfil para la novia. Recomendamos tacón grueso por las zonas verdes y abrigo para la noche.</p>
+      </div>
+    </section>
+
+    <!-- ====== MESA ====== -->
+    <section class="section section--white" id="mesa">
+      <div class="container">
+        <p class="eyebrow reveal">Ubicación</p>
+        <h2 class="title reveal">¿Cuál es tu mesa?</h2>
+        <p class="text reveal">Escribe tu nombre o apellido (mínimo 3 letras)</p>
+        <div class="finder reveal">
+          <input type="text" id="guest-search" class="input" placeholder="Ej. Valentina, Restrepo…" autocomplete="off">
+          <div id="search-result" class="finder__result" aria-live="polite"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====== REGALOS ====== -->
+    <section class="section section--olive" id="regalos">
+      <div class="container">
+        <p class="eyebrow eyebrow--light reveal">Regalos</p>
+        <h2 class="title title--light reveal">Lluvia de sobres</h2>
+        <div class="gift reveal">
+          <svg viewBox="0 0 64 64" class="gift__icon"><rect x="8" y="16" width="48" height="34" rx="3" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 18l24 18 24-18" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+          <p class="gift__account">Tu presencia es nuestro mejor regalo</p>
+          <p class="small small--light">Si deseas tener un detalle con nosotros, habrá un buzón para sobres en la recepción.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====== FOTOS / HASHTAG ====== -->
+    <section class="section section--cream" id="fotos">
+      <div class="container">
+        <p class="eyebrow reveal">Comparte el momento</p>
+        <h2 class="title reveal">Tus fotos</h2>
+        <p class="text reveal">Usa nuestro hashtag en Instagram para que podamos revivir el día a través de tus ojos.</p>
+        <p class="hashtag reveal" data-bind="hashtag">#NuestraBodaEnKala</p>
+      </div>
+    </section>
+
+    <!-- ====== FAQ ====== -->
+    <section class="section section--white" id="faq">
+      <div class="container">
+        <p class="eyebrow reveal">Lo que debes saber</p>
+        <h2 class="title reveal">Preguntas frecuentes</h2>
+        <div class="faq reveal">
+          <details><summary>¿Puedo llevar acompañante?</summary><p>Tu invitación indica el número de pases. Te pedimos respetarlo para que todos estemos cómodos.</p></details>
+          <details><summary>¿Habrá parqueadero?</summary><p>Sí, la hacienda cuenta con parqueadero para invitados.</p></details>
+          <details><summary>¿Cómo es el clima?</summary><p>El Rosal es frío, sobre todo en la noche (8–12 °C). Lleva un abrigo o chal.</p></details>
+          <details><summary>¿Pueden ir niños?</summary><p>Amamos a los pequeños, pero esta celebración será solo para adultos.</p></details>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====== RSVP ====== -->
+    <section class="section section--olive" id="rsvp">
+      <div class="container">
+        <p class="eyebrow eyebrow--light reveal">RSVP</p>
+        <h2 class="title title--light reveal">Confirma tu asistencia</h2>
+        <p class="text text--light reveal">Por favor confírmanos antes del <strong data-bind="fechaLimiteRSVP">1 de marzo</strong></p>
+
+        <form id="rsvp-form" class="rsvp reveal" name="rsvp" method="POST" data-netlify="true" netlify-honeypot="bot-field" novalidate>
+          <input type="hidden" name="form-name" value="rsvp">
+          <p hidden><label>No llenar: <input name="bot-field"></label></p>
+          <div class="field">
+            <label for="rsvp-name">Nombre completo</label>
+            <input class="input" type="text" id="rsvp-name" name="nombre" placeholder="Ej. Carlos Martínez" required>
+          </div>
+
+          <div class="field">
+            <span class="label">¿Nos acompañas?</span>
+            <div class="choice">
+              <label class="choice__opt">
+                <input type="radio" name="asistencia" value="Sí" checked>
+                <span>🥂 ¡Sí, allí estaré!</span>
+              </label>
+              <label class="choice__opt">
+                <input type="radio" name="asistencia" value="No">
+                <span>💌 No podré ir</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="yes-only" id="yes-only">
+            <div class="field">
+              <label for="rsvp-count">Número de personas (incluyéndote)</label>
+              <div class="stepper">
+                <button type="button" class="stepper__btn" data-step="-1" aria-label="Menos">−</button>
+                <input class="input stepper__val" type="number" id="rsvp-count" name="personas" value="1" min="1" readonly>
+                <button type="button" class="stepper__btn" data-step="1" aria-label="Más">+</button>
+              </div>
+            </div>
+            <div class="field" id="companions-field" hidden>
+              <label for="rsvp-companions">Nombre de tus acompañantes</label>
+              <input class="input" type="text" id="rsvp-companions" name="acompanantes" placeholder="Ej. Ana Pérez">
+            </div>
+            <div class="field">
+              <label for="rsvp-diet">Restricciones alimentarias</label>
+              <input class="input" type="text" id="rsvp-diet" name="restricciones" placeholder="Vegetariano, alergias… (opcional)">
+            </div>
+            <div class="field">
+              <label for="rsvp-song">¿Qué canción no puede faltar?</label>
+              <input class="input" type="text" id="rsvp-song" name="cancion" placeholder="Opcional">
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="rsvp-phone">Teléfono</label>
+            <input class="input" type="tel" id="rsvp-phone" name="telefono" placeholder="300 000 0000">
+          </div>
+          <div class="field">
+            <label for="rsvp-msg">Mensaje para los novios</label>
+            <textarea class="input" id="rsvp-msg" name="mensaje" rows="3" placeholder="Opcional"></textarea>
+          </div>
+
+          <button type="submit" id="rsvp-submit" class="btn btn--light btn--block">
+            <span class="btn__text">Enviar confirmación</span>
+            <span class="spinner" aria-hidden="true"></span>
+          </button>
+          <p id="rsvp-error" class="rsvp__error" role="alert"></p>
+        </form>
+
+        <div id="rsvp-thanks" class="thanks" hidden>
+          <svg class="thanks__check" viewBox="0 0 52 52"><circle cx="26" cy="26" r="24" fill="none"/><path fill="none" d="M15 27l7 7 15-15"/></svg>
+          <h3 id="thanks-title">¡Gracias por confirmar!</h3>
+          <p id="thanks-text">Nos hace muy felices compartir este día contigo.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <svg class="footer__branch"><use href="#olive-branch"/></svg>
+    <p class="footer__names"><span data-bind="novia">Ella</span> &amp; <span data-bind="novio">Él</span></p>
+    <p class="small small--light" data-bind="fechaTexto">03 · 04 · 2027</p>
+  </footer>
+
+  <canvas id="confetti" class="confetti" aria-hidden="true"></canvas>
+  <audio id="bg-music" loop preload="none"></audio>
+
+  <!-- Contenedor 100% invisible para el audio de YouTube (reproducción nativa) -->
+  <div class="yt-player-offscreen" aria-hidden="true">
+    <div id="yt-player"></div>
+  </div>
+
+  <script src="https://www.youtube.com/iframe_api"></script>
+  <script src="config.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

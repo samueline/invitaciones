@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nuestra Boda | 3 de Abril</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,500;0,600;1,400&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --olive-dark: #2d382e;
+      --olive-primary: #4a5d4e;
+      --olive-light: #738677;
+      --olive-soft: #eaf0eb;
+      --olive-border: #d4ded6;
+      --bg-cream: #fbfbfa;
+      --card-bg: #ffffff;
+      --text-main: #2b332c;
+      --text-muted: #647466;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: var(--bg-cream);
+      color: var(--text-main);
+      display: flex;
+      justify-content: center;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .wrapper {
+      width: 100%;
+      max-width: 480px;
+      background-color: var(--card-bg);
+      min-height: 100vh;
+      box-shadow: 0 15px 35px rgba(45, 56, 46, 0.06);
+      padding: 3rem 1.6rem 4.5rem;
+      text-align: center;
+    }
+
+    /* Tipografía */
+    h1, h2, h3, .serif-font {
+      font-family: 'Playfair Display', serif;
+      font-weight: 500;
+    }
+
+    .pre-badge {
+      display: inline-block;
+      font-size: 0.72rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--olive-primary);
+      background-color: var(--olive-soft);
+      padding: 0.4rem 1rem;
+      border-radius: 50px;
+      margin-bottom: 1.5rem;
+      font-weight: 600;
+    }
+
+    .couple-names {
+      font-size: 2.8rem;
+      line-height: 1.1;
+      color: var(--olive-dark);
+      margin-bottom: 0.6rem;
+    }
+
+    .wedding-date {
+      font-size: 0.9rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--olive-light);
+      margin-bottom: 1.8rem;
+      font-weight: 500;
+    }
+
+    .quote {
+      font-style: italic;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.05rem;
+      color: var(--olive-dark);
+      margin: 0 auto 2rem;
+      max-width: 380px;
+    }
+
+    /* Contador */
+    .countdown-container {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.5rem;
+      margin: 2rem 0;
+    }
+
+    .count-box {
+      background: var(--olive-soft);
+      border: 1px solid var(--olive-border);
+      border-radius: 12px;
+      padding: 0.85rem 0.2rem;
+    }
+
+    .count-box .num {
+      font-size: 1.6rem;
+      font-weight: 600;
+      color: var(--olive-dark);
+      display: block;
+      line-height: 1.1;
+    }
+
+    .count-box .lbl {
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--olive-light);
+      font-weight: 600;
+    }
+
+    /* Secciones */
+    .section {
+      margin-top: 3rem;
+      padding-top: 2.5rem;
+      border-top: 1px solid #edf1ee;
+    }
+
+    .section-title {
+      font-size: 1.7rem;
+      color: var(--olive-dark);
+      margin-bottom: 0.4rem;
+    }
+
+    .section-subtitle {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 1.5rem;
+    }
+
+    /* Botones */
+    .btn-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      margin-top: 1.2rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.95rem 1.4rem;
+      border-radius: 10px;
+      font-size: 0.88rem;
+      font-weight: 500;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      cursor: pointer;
+      border: none;
+    }
+
+    .btn-solid {
+      background-color: var(--olive-primary);
+      color: #ffffff;
+    }
+
+    .btn-solid:hover {
+      background-color: var(--olive-dark);
+    }
+
+    .btn-outline {
+      background-color: transparent;
+      border: 1px solid var(--olive-primary);
+      color: var(--olive-primary);
+    }
+
+    .btn-outline:hover {
+      background-color: var(--olive-soft);
+    }
+
+    /* Buscador de Mesas */
+    .table-finder-box {
+      background: #fafbfa;
+      border: 1px solid var(--olive-border);
+      border-radius: 16px;
+      padding: 1.5rem 1.2rem;
+      margin-top: 1rem;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 0.85rem 1rem;
+      border: 1px solid var(--olive-border);
+      border-radius: 10px;
+      font-size: 0.9rem;
+      font-family: inherit;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .search-input:focus {
+      border-color: var(--olive-primary);
+    }
+
+    .search-result {
+      margin-top: 1.2rem;
+      display: none;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .mesa-badge {
+      display: inline-block;
+      background: var(--olive-dark);
+      color: #fff;
+      font-size: 1.15rem;
+      font-weight: 600;
+      padding: 0.6rem 1.5rem;
+      border-radius: 8px;
+      margin-top: 0.5rem;
+      letter-spacing: 0.5px;
+    }
+
+    /* Itinerario */
+    .itinerary {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+      text-align: left;
+      margin-top: 1rem;
+    }
+
+    .itinerary-card {
+      display: flex;
+      gap: 1rem;
+      align-items: baseline;
+      padding: 0.8rem 1rem;
+      background: #fbfcfb;
+      border-radius: 10px;
+      border-left: 3px solid var(--olive-primary);
+    }
+
+    .itinerary-time {
+      font-weight: 600;
+      font-size: 0.85rem;
+      color: var(--olive-primary);
+      min-width: 65px;
+    }
+
+    .itinerary-info h4 {
+      font-size: 0.92rem;
+      color: var(--olive-dark);
+      font-weight: 600;
+    }
+
+    .itinerary-info p {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    /* Dress Code Paleta */
+    .color-swatches {
+      display: flex;
+      justify-content: center;
+      gap: 0.6rem;
+      margin: 1rem 0;
+    }
+
+    .swatch {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 2px solid #fff;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    /* Formulario */
+    .form-group {
+      text-align: left;
+      margin-bottom: 1rem;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--olive-dark);
+      margin-bottom: 0.35rem;
+    }
+
+    .form-group input, .form-group select {
+      width: 100%;
+      padding: 0.85rem 1rem;
+      border: 1px solid var(--olive-border);
+      border-radius: 10px;
+      font-family: inherit;
+      font-size: 0.9rem;
+      background: #fdfdfd;
+    }
+
+    .form-group input:focus, .form-group select:focus {
+      outline: none;
+      border-color: var(--olive-primary);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="wrapper">
+    <span class="pre-badge">Nuestra Boda</span>
+    <h1 class="couple-names">Él & Ella</h1>
+    <div class="wedding-date">Sábado · 3 de Abril · 2027</div>
+
+    <p class="quote">
+      "Las mejores historias comienzan con un sí, y queremos escribir este capítulo rodeados de las personas que más amamos."
+    </p>
+
+    <!-- Contador -->
+    <div class="countdown-container">
+      <div class="count-box">
+        <span class="num" id="d">00</span>
+        <span class="lbl">Días</span>
+      </div>
+      <div class="count-box">
+        <span class="num" id="h">00</span>
+        <span class="lbl">Horas</span>
+      </div>
+      <div class="count-box">
+        <span class="num" id="m">00</span>
+        <span class="lbl">Min</span>
+      </div>
+      <div class="count-box">
+        <span class="num" id="s">00</span>
+        <span class="lbl">Seg</span>
+      </div>
+    </div>
+
+    <!-- Ubicación y Mapa -->
+    <div class="section">
+      <h2 class="section-title">Lugar & Recepción</h2>
+      <p class="section-subtitle">Acompáñanos a celebrar este gran momento</p>
+      
+      <p style="font-weight: 600; font-size: 1.1rem; color: var(--olive-dark);">Hacienda / Salón de Eventos</p>
+      <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.5rem;">Cundinamarca, Colombia</p>
+
+      <div class="btn-stack">
+        <!-- Reemplaza el link con tu enlace de Google Maps -->
+        <a href="https://maps.google.com" target="_blank" class="btn btn-solid">
+          Cómo llegar en Google Maps
+        </a>
+        <!-- Reemplaza el link con tu enlace de Waze -->
+        <a href="https://waze.com" target="_blank" class="btn btn-outline">
+          Cómo llegar en Waze
+        </a>
+      </div>
+    </div>
+
+    <!-- Buscador de Mesa Asignada -->
+    <div class="section">
+      <h2 class="section-title">¿Cuál es tu Mesa?</h2>
+      <p class="section-subtitle">Escribe tu nombre o apellido para conocer tu ubicación asignada</p>
+      
+      <div class="table-finder-box">
+        <input 
+          type="text" 
+          id="guest-search" 
+          class="search-input" 
+          placeholder="Escribe tu nombre aquí..."
+          oninput="buscarMesa()"
+        >
+
+        <div id="search-result" class="search-result">
+          <p id="result-name" style="font-size: 0.9rem; font-weight: 600; color: var(--olive-dark);"></p>
+          <div class="mesa-badge" id="result-table">Mesa 0</div>
+          <p id="result-note" style="font-size: 0.78rem; color: var(--text-muted); margin-top: 0.5rem;"></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Itinerario -->
+    <div class="section">
+      <h2 class="section-title">Itinerario</h2>
+      <p class="section-subtitle">Cada instante está pensado para disfrutarlo juntos</p>
+      
+      <div class="itinerary">
+        <div class="itinerary-card">
+          <span class="itinerary-time">3:30 PM</span>
+          <div class="itinerary-info">
+            <h4>Llegada de invitados</h4>
+            <p>Bienvenida y acomodación</p>
+          </div>
+        </div>
+        <div class="itinerary-card">
+          <span class="itinerary-time">4:00 PM</span>
+          <div class="itinerary-info">
+            <h4>Ceremonia</h4>
+            <p>El momento del "Sí"</p>
+          </div>
+        </div>
+        <div class="itinerary-card">
+          <span class="itinerary-time">5:30 PM</span>
+          <div class="itinerary-info">
+            <h4>Cóctel & Fotos</h4>
+            <p>Bebidas, aperitivos y atardecer</p>
+          </div>
+        </div>
+        <div class="itinerary-card">
+          <span class="itinerary-time">7:00 PM</span>
+          <div class="itinerary-info">
+            <h4>Cena & Brindis</h4>
+            <p>Compartir en la mesa</p>
+          </div>
+        </div>
+        <div class="itinerary-card">
+          <span class="itinerary-time">8:30 PM</span>
+          <div class="itinerary-info">
+            <h4>Fiesta</h4>
+            <p>Música y celebración hasta el final</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Código de Vestimenta -->
+    <div class="section">
+      <h2 class="section-title">Código de Vestimenta</h2>
+      <p style="font-weight: 600; color: var(--olive-dark); margin-bottom: 0.3rem;">Formal / Traje y Vestido</p>
+      <p style="font-size: 0.85rem; color: var(--text-muted); max-width: 360px; margin: 0 auto;">
+        Nos encantaría que te unas a nuestra gama de tonos naturales y elegantes:
+      </p>
+
+      <div class="color-swatches">
+        <div class="swatch" style="background-color: #2d382e;" title="Oliva Profundo"></div>
+        <div class="swatch" style="background-color: #738677;" title="Salvia"></div>
+        <div class="swatch" style="background-color: #c8b9a6;" title="Arena"></div>
+        <div class="swatch" style="background-color: #414b56;" title="Azul Ceniza"></div>
+      </div>
+
+      <p style="font-size: 0.78rem; color: var(--text-muted); margin-top: 0.6rem;">
+        * Por favor reservar el color blanco/marfil para la novia. Se recomienda calzado cómodo para zonas verdes y abrigo para la noche.
+      </p>
+    </div>
+
+    <!-- Regalos / Lluvia de Sobres -->
+    <div class="section">
+      <h2 class="section-title">Lluvia de Sobres</h2>
+      <p class="section-subtitle">Tu presencia es nuestro mejor obsequio</p>
+      
+      <div style="background: var(--olive-soft); border-radius: 14px; padding: 1.5rem; border: 1px dashed var(--olive-light);">
+        <p style="font-size: 0.88rem; margin-bottom: 0.8rem;">
+          Dispondremos de un buzón en la recepción para sobres, o si prefieres realizar transferencia digital:
+        </p>
+        <p id="bank-data" style="font-weight: 600; font-size: 0.95rem; color: var(--olive-dark); letter-spacing: 0.5px;">
+          Bancolombia Ahorros: 000-000000-00
+        </p>
+        <button class="btn btn-outline" style="margin-top: 1rem; padding: 0.5rem 1.2rem; font-size: 0.78rem;" onclick="copiarCuenta()">
+          Copiar número de cuenta
+        </button>
+        <div id="copy-msg" style="display:none; color: #2e7d32; font-size: 0.75rem; margin-top: 0.5rem; font-weight: 600;">
+          ¡Copiado en el portapapeles!
+        </div>
+      </div>
+    </div>
+
+    <!-- Confirmación (RSVP) -->
+    <div class="section">
+      <h2 class="section-title">Confirmar Asistencia</h2>
+      <p class="section-subtitle">Agradecemos confirmar antes del <strong>1 de marzo</strong></p>
+
+      <form onsubmit="enviarWhatsApp(event)">
+        <div class="form-group">
+          <label for="rsvp-name">Nombre y Apellido</label>
+          <input type="text" id="rsvp-name" placeholder="Ej. Carlos Martínez" required>
+        </div>
+
+        <div class="form-group">
+          <label for="rsvp-confirm">¿Nos acompañas?</label>
+          <select id="rsvp-confirm" required>
+            <option value="Sí, confirmo con alegría">Sí, allí estaré</option>
+            <option value="Lo siento, no podré asistir">Lamentablemente no podré ir</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="rsvp-passes">Cupos confirmados</label>
+          <select id="rsvp-passes">
+            <option value="1 persona">1 persona</option>
+            <option value="2 personas">2 personas</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="rsvp-diet">Restricciones alimentarias (opcional)</label>
+          <input type="text" id="rsvp-diet" placeholder="Ej. Vegetariano, alérgico a nueces...">
+        </div>
+
+        <button type="submit" class="btn btn-solid" style="width: 100%; margin-top: 0.8rem;">
+          Enviar confirmación a WhatsApp
+        </button>
+      </form>
+    </div>
+
+    <footer style="margin-top: 3.5rem; font-size: 0.78rem; color: var(--olive-light);">
+      Con amor, los esperamos.
+    </footer>
+  </div>
+
+  <script>
+    // 1. CONFIGURACIÓN DE CUENTA REGRESIVA (3 de Abril 2027 a las 15:30)
+    const targetDate = new Date("2027-04-03T15:30:00").getTime();
+
+    function updateTimer() {
+      const diff = targetDate - new Date().getTime();
+      if (diff > 0) {
+        document.getElementById("d").innerText = String(Math.floor(diff / (1000 * 60 * 60 * 24))).padStart(2, '0');
+        document.getElementById("h").innerText = String(Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))).padStart(2, '0');
+        document.getElementById("m").innerText = String(Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60))).padStart(2, '0');
+        document.getElementById("s").innerText = String(Math.floor((diff % (1000 * 60)) / 1000)).padStart(2, '0');
+      }
+    }
+    setInterval(updateTimer, 1000);
+    updateTimer();
+
+    // 2. BASE DE DATOS DE INVITADOS Y MESAS
+    // Aquí puedes agregar todos tus invitados con su mesa asignada:
+    const invitados = [
+      { nombre: "Carlos Gomez", mesa: "Mesa 1 - Olivo", acompanantes: "Pase para 2 personas" },
+      { nombre: "Laura Martinez", mesa: "Mesa 1 - Olivo", acompanantes: "Pase individual" },
+      { nombre: "Andres Rodriguez", mesa: "Mesa 2 - Eucalipto", acompanantes: "Pase para 2 personas" },
+      { nombre: "Familia Perez", mesa: "Mesa 3 - Salvia", acompanantes: "Pase familiar (3 pases)" },
+      { nombre: "Sofia Gomez", mesa: "Mesa 4 - Romero", acompanantes: "Pase para 2 personas" }
+    ];
+
+    function normalizar(texto) {
+      return texto.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim();
+    }
+
+    function buscarMesa() {
+      const q = normalizar(document.getElementById("guest-search").value);
+      const resContainer = document.getElementById("search-result");
+      const nameEl = document.getElementById("result-name");
+      const tableEl = document.getElementById("result-table");
+      const noteEl = document.getElementById("result-note");
+
+      if (q.length < 3) {
+        resContainer.style.display = "none";
+        return;
+      }
+
+      const match = invitados.find(inv => normalizar(inv.nombre).includes(q));
+
+      if (match) {
+        nameEl.innerText = match.nombre;
+        tableEl.innerText = match.mesa;
+        noteEl.innerText = match.acompanantes;
+        resContainer.style.display = "block";
+      } else {
+        nameEl.innerText = "No encontramos tu nombre aún";
+        tableEl.innerText = "Mesa por confirmar";
+        noteEl.innerText = "Por favor verifica la ortografía o consúltanos directamente.";
+        resContainer.style.display = "block";
+      }
+    }
+
+    // 3. COPIAR CUENTA
+    function copiarCuenta() {
+      const txt = document.getElementById("bank-data").innerText;
+      navigator.clipboard.writeText(txt).then(() => {
+        const msg = document.getElementById("copy-msg");
+        msg.style.display = "block";
+        setTimeout(() => msg.style.display = "none", 2500);
+      });
+    }
+
+    // 4. RSVP POR WHATSAPP
+    function enviarWhatsApp(e) {
+      e.preventDefault();
+
+      // Coloca aquí tu número con indicativo (Ej. 573001234567 para Colombia)
+      const tuNumero = "573105393307";
+
+      const nombre = document.getElementById("rsvp-name").value;
+      const estado = document.getElementById("rsvp-confirm").value;
+      const cupos = document.getElementById("rsvp-passes").value;
+      const dieta = document.getElementById("rsvp-diet").value || "Sin restricciones";
+
+      const mensaje = `🌿 *Confirmación de Boda* 🌿%0A%0A` +
+                      `*Invitado:* ${encodeURIComponent(nombre)}%0A` +
+                      `*Respuesta:* ${encodeURIComponent(estado)}%0A` +
+                      `*Cupos:* ${encodeURIComponent(cupos)}%0A` +
+                      `*Alergias/Restricciones:* ${encodeURIComponent(dieta)}`;
+
+      window.open(`https://wa.me/${tuNumero}?text=${mensaje}`, '_blank');
+    }
+  </script>
+</body>
+</html>

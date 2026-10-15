@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Conteo de confirmaciones · Boda</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root { --o9:#232b1c; --o7:#3a4630; --o6:#4d5c3a; --sage:#d7dcc8; --cream:#f7f3ea; --gold:#c2a46b; --muted:#6e7461; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Jost', sans-serif; font-weight: 300; background: var(--cream); color: #2a2f24; min-height: 100vh; }
+    header { background: linear-gradient(160deg, var(--o7), var(--o9)); color: var(--cream); padding: 2.2rem 1.5rem 5rem; text-align: center; }
+    header h1 { font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: 2.4rem; }
+    header p { opacity: .75; font-size: .8rem; letter-spacing: 3px; text-transform: uppercase; }
+    main { max-width: 1100px; margin: -3.5rem auto 3rem; padding: 0 1.2rem; }
+    .card { background: #fff; border-radius: 20px; box-shadow: 0 20px 50px -30px rgba(35,43,28,.5); border: 1px solid var(--sage); }
+    .drop { padding: 2.6rem 1.5rem; text-align: center; border: 2px dashed var(--sage); cursor: pointer; transition: border-color .2s, background .2s; }
+    .drop.over { border-color: var(--gold); background: #fffdf6; }
+    .drop h2 { font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: 1.7rem; margin: .4rem 0; }
+    .drop p { color: var(--muted); font-size: .9rem; }
+    .drop .icon { font-size: 2.4rem; }
+    .note { font-size: .8rem; color: var(--muted); text-align: center; margin: .8rem 0 1.6rem; }
+    button { font: inherit; cursor: pointer; border: 0; border-radius: 999px; padding: .8rem 1.4rem; background: var(--o6); color: #fff; letter-spacing: 1.5px; text-transform: uppercase; font-size: .72rem; font-weight: 500; transition: background .2s; }
+    button:hover { background: var(--o9); }
+    button.ghost { background: transparent; color: var(--o6); border: 1px solid var(--o6); }
+    input[type=search] { flex: 1; min-width: 180px; padding: .8rem 1rem; border: 1px solid var(--sage); border-radius: 12px; font: inherit; outline: none; }
+    .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 1.2rem; }
+    .stat { padding: 1.4rem; }
+    .stat .lbl { font-size: .7rem; letter-spacing: 2.5px; text-transform: uppercase; color: var(--muted); }
+    .stat .num { font-family: 'Cormorant Garamond', serif; font-size: 3rem; font-weight: 600; color: var(--o7); line-height: 1.1; }
+    .stat.hl { background: linear-gradient(160deg, var(--o6), var(--o7)); color: #fff; border: 0; }
+    .stat.hl .lbl { color: rgba(255,255,255,.75); } .stat.hl .num { color: #fff; }
+    .toolbar { display: flex; gap: .6rem; flex-wrap: wrap; align-items: center; padding: 1rem 1.2rem; border-bottom: 1px solid var(--sage); }
+    .tabs button { background: transparent; color: var(--muted); border: 1px solid var(--sage); }
+    .tabs button.on { background: var(--o6); color: #fff; border-color: var(--o6); }
+    .table-wrap { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; font-size: .88rem; }
+    th, td { text-align: left; padding: .85rem 1rem; border-bottom: 1px solid #eef0e8; vertical-align: top; }
+    th { font-size: .68rem; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); font-weight: 500; background: #fafaf6; }
+    td.n { font-weight: 500; }
+    .pill { display: inline-block; padding: .15rem .7rem; border-radius: 999px; font-size: .75rem; font-weight: 500; }
+    .pill.si { background: #e5ecd6; color: #3a4630; } .pill.no { background: #f3e4dc; color: #8a4a2c; }
+    .empty { padding: 3rem; text-align: center; color: var(--muted); }
+    [hidden] { display: none !important; }
+  </style>
+</head>
+<body>
+  <header>
+    <p>Panel privado · todo se procesa en tu dispositivo</p>
+    <h1>Conteo de confirmaciones 🌿</h1>
+  </header>
+
+  <main>
+    <label class="card drop" id="drop">
+      <div class="icon">📄</div>
+      <h2>Arrastra aquí tu archivo CSV</h2>
+      <p>o haz clic para seleccionarlo</p>
+      <input type="file" id="file" accept=".csv,text/csv" hidden>
+    </label>
+    <p class="note">Descárgalo desde Netlify → <em>Forms → rsvp → Download as CSV</em>. El archivo no se sube a ningún lado.</p>
+
+    <section id="dash" hidden>
+      <div class="stats">
+        <div class="card stat hl"><div class="lbl">Personas que asisten</div><div class="num" id="s-personas">0</div></div>
+        <div class="card stat"><div class="lbl">Confirmaciones "Sí"</div><div class="num" id="s-si">0</div></div>
+        <div class="card stat"><div class="lbl">No asistirán</div><div class="num" id="s-no">0</div></div>
+        <div class="card stat"><div class="lbl">Respuestas únicas</div><div class="num" id="s-total">0</div></div>
+      </div>
+
+      <div class="card">
+        <div class="toolbar">
+          <input type="search" id="filtro" placeholder="Buscar por nombre…">
+          <div class="tabs">
+            <button data-f="todos" class="on">Todos</button>
+            <button data-f="Sí">Sí</button>
+            <button data-f="No">No</button>
+          </div>
+          <button class="ghost" id="btn-clear">Cargar otro archivo</button>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Fecha</th><th>Nombre</th><th>Asiste</th><th>Personas</th><th>Acompañantes</th><th>Restricciones</th><th>Canción</th><th>Teléfono</th><th>Mensaje</th></tr></thead>
+            <tbody id="rows"></tbody>
+          </table>
+          <p class="empty" id="empty" hidden>No hay resultados.</p>
+        </div>
+      </div>
+      <p class="note" id="dupes"></p>
+    </section>
+  </main>
+
+  <script>
+    const $ = s => document.querySelector(s);
+    const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;' }[c]));
+    const norm = t => String(t || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').trim();
+    let datos = [], filtroAsis = 'todos';
+
+    /* CSV parser (soporta comillas, comas/; y saltos de línea dentro de campos) */
+    function parseCSV(text) {
+      text = text.replace(/^\ufeff/, '');
+      const sep = (text.split('\n')[0].match(/;/g) || []).length > (text.split('\n')[0].match(/,/g) || []).length ? ';' : ',';
+      const rows = []; let row = [], cur = '', q = false;
+      for (let i = 0; i < text.length; i++) {
+        const c = text[i];
+        if (q) {
+          if (c === '"' && text[i + 1] === '"') { cur += '"'; i++; }
+          else if (c === '"') q = false;
+          else cur += c;
+        } else if (c === '"') q = true;
+        else if (c === sep) { row.push(cur); cur = ''; }
+        else if (c === '\n' || c === '\r') {
+          if (c === '\r' && text[i + 1] === '\n') i++;
+          row.push(cur); rows.push(row); row = []; cur = '';
+        } else cur += c;
+      }
+      if (cur || row.length) { row.push(cur); rows.push(row); }
+      return rows.filter(r => r.some(v => v.trim()));
+    }
+
+    function procesar(text) {
+      const rows = parseCSV(text);
+      if (rows.length < 2) return alert('El archivo está vacío o no tiene el formato esperado.');
+      const head = rows[0].map(norm);
+      const col = (...names) => head.findIndex(h => names.some(n => h === n || h.includes(n)));
+      const idx = {
+        fecha: col('created_at', 'fecha', 'date'), nombre: col('nombre', 'name'),
+        asistencia: col('asistencia'), personas: col('personas'), acompanantes: col('acompanantes'),
+        restricciones: col('restricciones'), cancion: col('cancion'), telefono: col('telefono'), mensaje: col('mensaje'),
+      };
+      if (idx.nombre < 0 || idx.asistencia < 0) return alert('No encontré las columnas "nombre" y "asistencia" en el CSV.');
+      const get = (r, k) => idx[k] >= 0 ? (r[idx[k]] || '').trim() : '';
+
+      let todos = rows.slice(1).map(r => ({
+        fecha: get(r, 'fecha'), nombre: get(r, 'nombre'),
+        asistencia: /^s/i.test(get(r, 'asistencia')) ? 'Sí' : 'No',
+        personas: parseInt(get(r, 'personas')) || 0,
+        acompanantes: get(r, 'acompanantes'), restricciones: get(r, 'restricciones'),
+        cancion: get(r, 'cancion'), telefono: get(r, 'telefono'), mensaje: get(r, 'mensaje'),
+      })).filter(d => d.nombre);
+      todos.forEach(d => { if (d.asistencia === 'Sí' && !d.personas) d.personas = 1; if (d.asistencia === 'No') d.personas = 0; });
+      todos.sort((a, b) => new Date(a.fecha) - new Date(b.fecha));
+
+      // Si alguien confirmó dos veces, cuenta solo su respuesta más reciente
+      const unicos = new Map();
+      todos.forEach(d => unicos.set(norm(d.nombre), d));
+      datos = [...unicos.values()].reverse();
+      const dup = todos.length - datos.length;
+      $('#dupes').textContent = dup ? `Se ignoraron ${dup} respuesta(s) duplicada(s) (se usa la más reciente de cada nombre).` : '';
+
+      const si = datos.filter(d => d.asistencia === 'Sí');
+      animar('#s-personas', si.reduce((a, d) => a + d.personas, 0));
+      animar('#s-si', si.length);
+      animar('#s-no', datos.length - si.length);
+      animar('#s-total', datos.length);
+      $('#drop').hidden = true; $('#dash').hidden = false;
+      pintar();
+    }
+
+    function animar(sel, to) {
+      const el = $(sel), t0 = performance.now();
+      (function f(t) { const p = Math.min(1, (t - t0) / 900); el.textContent = Math.round(to * (1 - Math.pow(1 - p, 3))); if (p < 1) requestAnimationFrame(f); })(t0);
+    }
+
+    function pintar() {
+      const q = norm($('#filtro').value);
+      const list = datos.filter(d => (filtroAsis === 'todos' || d.asistencia === filtroAsis) && norm(d.nombre + ' ' + d.acompanantes).includes(q));
+      $('#empty').hidden = list.length > 0;
+      $('#rows').innerHTML = list.map(d => {
+        const f = new Date(d.fecha);
+        return `<tr>
+          <td>${isNaN(f) ? esc(d.fecha) : f.toLocaleDateString('es-CO', { day: '2-digit', month: 'short' })}</td>
+          <td class="n">${esc(d.nombre)}</td>
+          <td><span class="pill ${d.asistencia === 'Sí' ? 'si' : 'no'}">${d.asistencia}</span></td>
+          <td>${d.personas}</td><td>${esc(d.acompanantes)}</td><td>${esc(d.restricciones)}</td>
+          <td>${esc(d.cancion)}</td><td>${esc(d.telefono)}</td><td>${esc(d.mensaje)}</td></tr>`;
+      }).join('');
+    }
+
+    function leer(file) { if (file) file.text().then(procesar); }
+    $('#file').addEventListener('change', e => leer(e.target.files[0]));
+    const drop = $('#drop');
+    ['dragenter', 'dragover'].forEach(ev => drop.addEventListener(ev, e => { e.preventDefault(); drop.classList.add('over'); }));
+    ['dragleave', 'drop'].forEach(ev => drop.addEventListener(ev, e => { e.preventDefault(); drop.classList.remove('over'); }));
+    drop.addEventListener('drop', e => leer(e.dataTransfer.files[0]));
+    $('#filtro').addEventListener('input', pintar);
+    $('#btn-clear').addEventListener('click', () => { $('#dash').hidden = true; $('#drop').hidden = false; $('#file').value = ''; });
+    document.querySelectorAll('.tabs button').forEach(b => b.addEventListener('click', () => {
+      document.querySelectorAll('.tabs button').forEach(x => x.classList.remove('on'));
+      b.classList.add('on'); filtroAsis = b.dataset.f; pintar();
+    }));
+  </script>
+</body>
+</html>
